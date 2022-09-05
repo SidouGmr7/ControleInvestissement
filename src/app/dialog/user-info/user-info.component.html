@@ -1,0 +1,24 @@
+<div *ngIf="authService.ChekRole('Admin')">
+    <h2>you are admin</h2>
+    <h2>Host : {{authService.user.host}}</h2>
+    <h2>Email :{{authService.user.email}}</h2>
+    <h2>Password :{{authService.user.password}}</h2>
+    <h2>Admin :{{authService.user.role}}</h2>
+</div>
+<div *ngIf="authService.ChekRole('Comptable')">
+    <h2>you are comptable</h2>
+    <h2>Host : {{authService.user.host}}</h2>
+    <h2>Email :{{authService.user.email}}</h2>
+    <h2>Password :{{authService.user.password}}</h2>
+    <h2>Comptable :{{authService.user.role}}</h2>
+</div>
+<div *ngIf="authService.ChekRole('Gestionnaire')">
+    <h2>you are gestionnaire</h2>
+    <h2>Host : {{authService.user.host}}</h2>
+    <h2>Email :{{authService.user.email}}</h2>
+    <h2>Password :{{authService.user.password}}</h2>
+    <h2>Gestionnaire :{{authService.user.role}}</h2>
+</div>
+<div *ngIf="authService.isLogin">
+    <h2>you are login</h2>
+</div>

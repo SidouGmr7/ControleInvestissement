@@ -1,0 +1,118 @@
+<div class="mb-3 mt-3">
+    <p-tabView class="mb-2 mt-2" [(activeIndex)]="activeIndex">
+        <p-tabPanel header="Materiel en Attente" leftIcon="pi pi-calendar">
+            <div class="card">
+                <p-table [value]="materiel" id="excel-table" responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="font-size: smaller;" class="text-gray-600 text-center uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                            <th *ngIf="AuthService.ChekRole('Comptable')" style="font-size: smaller;" class="text-gray-600 text-center uppercase">options <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-2 space"></pButton></th>                    
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-mat>
+                        <tr *ngIf="mat.valide == 'attente'">
+                            <td class="text-center text-gray-700">{{mat.numero}}</td>
+                            <td class="text-center text-gray-700">{{mat.designation}}</td>
+                            <td class="text-center text-gray-700">{{mat.marque}}</td>
+                            <td class="text-center text-gray-700">{{mat.categorie}}</td>
+                            <td class="text-center text-gray-700">{{mat.serie}}</td>
+                            <td class="text-center text-gray-700">{{mat.date}}</td>
+                            <td class="text-center text-gray-700">{{mat.etat}}</td>
+                            <td class="text-center text-gray-700">{{mat.facteur}}</td>
+                            <td class="text-center text-gray-700">{{mat.PV}}</td>
+                            <td class="text-center text-gray-700">{{mat.prix| currency: 'DZD '}} </td>
+                            <td class="text-center" *ngIf="AuthService.ChekRole('Comptable')">
+                                <button pButton icon="pi pi-check" class="p-button-rounded p-button-text p-button-success" (click)="onAccipte(mat)"></button>
+                                <button pButton icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger" (click)="onRefuse(mat)"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Materiel Valider" leftIcon="pi pi-inbox">
+            <div class="card">
+                <p-table [value]="materiel" id="excel-table" responsiveLayout="scroll">
+                    <ng-template pTemplate="caption">
+                        <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-2 space"></pButton>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="font-size: smaller;" class="text-gray-600 text-center uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-mat>
+                        <tr *ngIf="mat.valide == 'valide'">
+                            <td class="text-center text-gray-700">{{mat.numero}}</td>
+                            <td class="text-center text-gray-700">{{mat.designation}}</td>
+                            <td class="text-center text-gray-700">{{mat.marque}}</td>
+                            <td class="text-center text-gray-700">{{mat.categorie}}</td>
+                            <td class="text-center text-gray-700">{{mat.serie}}</td>
+                            <td class="text-center text-gray-700">{{mat.date}}</td>
+                            <td class="text-center text-gray-700">{{mat.etat}}</td>
+                            <td class="text-center text-gray-700">{{mat.facteur}}</td>
+                            <td class="text-center text-gray-700">{{mat.PV}}</td>
+                            <td class="text-center text-gray-700">{{mat.prix| currency: 'DZD '}} </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Materiel Refuse" leftIcon="pi pi-inbox">
+            <div class="card">
+                <p-table [value]="materiel" id="excel-table" responsiveLayout="scroll">
+                    <ng-template pTemplate="caption">
+                        <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-2 space"></pButton>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="font-size: smaller;" class="text-gray-600 text-center uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-mat>
+                        <tr *ngIf="mat.valide == 'refuse'">
+                            <td class="text-center text-gray-700">{{mat.numero}}</td>
+                            <td class="text-center text-gray-700">{{mat.designation}}</td>
+                            <td class="text-center text-gray-700">{{mat.marque}}</td>
+                            <td class="text-center text-gray-700">{{mat.categorie}}</td>
+                            <td class="text-center text-gray-700">{{mat.serie}}</td>
+                            <td class="text-center text-gray-700">{{mat.date}}</td>
+                            <td class="text-center text-gray-700">{{mat.etat}}</td>
+                            <td class="text-center text-gray-700">{{mat.facteur}}</td>
+                            <td class="text-center text-gray-700">{{mat.PV}}</td>
+                            <td class="text-center text-gray-700">{{mat.prix| currency: 'DZD '}} </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>    
+        </p-tabPanel>
+        <p-tabPanel header="Materiel reformer " leftIcon="pi pi-inbox">
+            <div class="card">
+                <p-table [value]="materiel" id="excel-table" responsiveLayout="scroll">
+                    <ng-template pTemplate="caption">
+                        <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-2 space"></pButton>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="font-size: smaller;" class="text-gray-600 text-center uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-mat>
+                        <tr *ngIf="mat.valide == 'reforme'">
+                            <td class="text-center text-gray-700">{{mat.numero}}</td>
+                            <td class="text-center text-gray-700">{{mat.designation}}</td>
+                            <td class="text-center text-gray-700">{{mat.marque}}</td>
+                            <td class="text-center text-gray-700">{{mat.categorie}}</td>
+                            <td class="text-center text-gray-700">{{mat.serie}}</td>
+                            <td class="text-center text-gray-700">{{mat.date}}</td>
+                            <td class="text-center text-gray-700">{{mat.etat}}</td>
+                            <td class="text-center text-gray-700">{{mat.facteur}}</td>
+                            <td class="text-center text-gray-700">{{mat.PV}}</td>
+                            <td class="text-center text-gray-700">{{mat.prix| currency| currency: 'DZD ': ' '}} </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>    
+        </p-tabPanel>
+    </p-tabView>
+</div>

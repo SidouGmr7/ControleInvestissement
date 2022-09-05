@@ -1,0 +1,44 @@
+<div class="card" *ngIf="data.type == 'Fournisseur'">
+    <p-table [value]="Facteur" responsiveLayout="scroll" styleClass="p-datatable-striped" [paginator]="true" [rows]="5" [responsive]="true">
+        <ng-template pTemplate="header">
+                <tr>
+                    <th  style="font-size: smaller;" class="text-center text-gray-600 uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fac>
+                <tr>
+                    <td class="text-center text-gray-700">{{fac.numero}}</td>
+                    <td class="text-center text-gray-700">{{fac.fournisseur}}</td>
+                    <td class="text-center text-gray-700">{{fac.comptable}}</td>
+                    <td class="text-center text-gray-700">{{fac.date}}</td>
+                    <td class="text-center text-gray-700">{{fac.ht}}</td>
+                    <td class="text-center text-gray-700">{{fac.tva}}</td>
+                    <td class="text-center text-gray-700">{{fac.ttc}}</td>
+                </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="card" *ngIf="data.type == 'Materiel'">
+    <p-table [value]="Materiel" id="excel-table" responsiveLayout="scroll"  [responsive]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th  style="font-size: smaller;" class="text-center text-gray-600 uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of ChampsMateriels">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-mat>
+            <tr *ngIf="mat.groupe_code_inventaire == this.data.object.numero">
+                <td class="text-center text-gray-700">{{mat.numero}}</td>
+                <td class="text-center text-gray-700">{{mat.designation}}</td>
+                <td class="text-center text-gray-700">{{mat.marque}}</td>
+                <td class="text-center text-gray-700">{{mat.categorie}}</td>
+                <td class="text-center text-gray-700">{{mat.serie}}</td>
+                <td class="text-center text-gray-700">{{mat.date}}</td>
+                <td class="text-center text-gray-700">{{mat.etat}}</td>
+                <td class="text-center text-gray-700">{{mat.facteur}}</td>
+                <td class="text-center text-gray-700">{{mat.PV}}</td>
+                <td class="text-center text-gray-700">{{mat.prix | currency: 'DZD '}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

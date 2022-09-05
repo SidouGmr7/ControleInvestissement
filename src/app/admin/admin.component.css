@@ -1,0 +1,33 @@
+.layout{
+    background-image: url("https://www.kanaghaz.dz/media/file/9/cta_bg_606441a2573118.14434022.JPG");
+    background-color: aliceblue;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.body{
+    width: calc(100% - 3rem);
+    height: auto;
+    margin-left: 3rem;
+    z-index: 0;
+    position: static;
+    padding: 3rem; 
+    transition: all .5s ease-in-out;   
+   }
+   .body-collapsed{
+       width: calc(100% - 10rem);
+       margin-left: 10rem;
+   }
+   .svg1{
+    bottom: 0px;
+    z-index: -20;
+    position: fixed;
+    }
+   @media (max-width: 750px) {
+    .body{
+       width: 100%;
+       margin-left: 0;
+    }
+ 
+}

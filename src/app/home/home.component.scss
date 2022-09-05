@@ -1,0 +1,66 @@
+$myBlue: #1976d2;
+.login{
+  padding-top: 10rem;
+  width: 100%;
+  height: 100vh;
+  background-image: url("https://www.kanaghaz.dz/media/file/1/hero_bg_6062f13625f2e4.49678702.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.home{
+  background-color: #d5fefd;
+  background-image: linear-gradient(315deg, #bffffe 20%, rgb(250, 239, 216) 90%);
+}
+.cards{
+	margin-left: 30%;
+}
+.card{
+  transition: all .2s ease-in-out;
+  width: 20rem;
+  height: 22rem;
+  border: none;
+  border-left: solid 5px $myBlue;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5%;
+    &:hover{  
+      border-left: solid 7px $myBlue;
+      transform: scale(1.03);
+    }
+}
+
+footer{
+	position: relative;
+	width: 100%;
+	height: 30rem;
+  background-color: $myBlue;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.social a{
+  transition:all .3s ease-in-out;
+	align-items: center;
+	justify-content: center;
+	background:  whitesmoke;
+	border-radius: 50%;
+	color: $myBlue;
+	text-decoration: none;
+  &:hover{
+    transform: scale(1.1);
+  }
+}
+.end{
+	position: absolute;
+	color:whitesmoke;
+	bottom: 35px;
+	font-size: 14px; 
+}
+
+.phonefooter{
+  position: absolute;
+  width: 20%;
+  right: 10rem;
+  bottom: 0rem;
+}

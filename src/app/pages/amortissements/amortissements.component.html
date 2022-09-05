@@ -1,0 +1,31 @@
+<div class="head mb-2 mt-2">
+    <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Tableau de Calcule Taux Amortissment</a>
+    <div class="float-end">
+        <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-1"></pButton>
+    </div>
+</div>
+<div class="card">
+    <p-table [value]="Materiel" id="excel-table" [paginator]="true" [rows]="9" [responsive]="true" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="font-size: smaller;" class="text-gray-600 text-center uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of Champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                <th style="font-size: smaller;" class="text-gray-600 text-center uppercase">OPTIONS</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-mat>
+            <tr *ngIf="mat.valide == 'valide'">
+                <td class="text-center text-gray-700">{{mat.categorie}}</td>
+                <td class="text-center text-gray-700">{{mat.numero}}</td>
+                <td class="text-center text-gray-700">{{mat.designation}}</td>
+                <td class="text-center text-gray-700">{{mat.date}}</td>
+                <td class="text-center text-gray-700">{{mat.etat}}</td>
+                <td class="text-center text-gray-700">{{mat.prix| currency: 'DZD '}}</td>
+                <td class="text-center text-gray-700">{{fnc.TauxAmortissments(mat,Categorie)}}</td>
+                <td class="text-center text-gray-700">{{fnc.PrixActuel(mat,Categorie)| currency: 'DZD '}} </td>
+                <td>
+                    <button pButton icon="pi pi-exclamation-triangle" (click)="onReforme(mat)"  class="p-button-rounded p-button-text p-button-danger"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

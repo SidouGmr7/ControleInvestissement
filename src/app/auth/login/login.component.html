@@ -1,0 +1,28 @@
+ <div class="form-container">
+    <div *ngIf="!value">
+        <p class="text-white text-center fs-5">Bienveneu dans KANAGHAZ</p>
+        <div class="p-float-label">
+            <p-button mat-dialog-close type="submit" (click)="ChangeValue()">LOGIN</p-button>
+        </div>
+    </div>
+    <div *ngIf="value">
+        <h1>Login</h1>
+        <form>
+            <div class="p-float-label p-input-icon-left">
+                <input title="email" pInputText  #email> 
+                <label for="inputtext-left">Email Address</label>
+                <i class="pi pi-user"></i>
+            </div>
+            <div class="p-float-label p-input-icon-left">
+                <input type="password" pInputText  #password> 
+                <label for="inputtext-left">Mote de Passe</label>
+                <i class="pi pi-lock"></i>
+            </div>
+            <div class="p-float-label">
+                <p-button mat-dialog-close type="submit" (click)="onLogin(email.value,password.value)">LOGIN</p-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

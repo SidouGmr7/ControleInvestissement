@@ -1,0 +1,87 @@
+@import "../../../assets/scss/colors.scss";
+mat-toolbar{
+    transition: all .5s ease-in-out;
+    position: absolute;
+    height: auto;
+    width: calc(100% - 4rem);
+    margin-left: 4rem;
+    z-index: 1;
+    top: 0;
+    background-color: rgba(62, 149, 235, 0.02); 
+}
+.body-collapsed{
+    width: calc(100% - 10rem);
+    margin-left: 10rem;
+}
+
+.nav-nav{
+    list-style: none;
+    margin: 0;
+    align-items: center;
+}
+.nav-item{
+    margin-bottom: 0.625rem; 
+    float: left;
+    cursor: pointer;
+
+}
+.link{
+    align-items: center;
+    padding: 12px 0px 12px 12px;
+}
+.link-icon{
+    font-size: 20px;
+    width: 2rem;
+    margin: 0rem 0.3rem;
+    padding-top: 0.7rem;
+    margin-top: 10px;
+    margin-left: 5px;
+    color: $myBlue;
+    transition: all 0.5s ease;
+    &:hover{
+        color: $myGrey;
+    }
+}
+.label{
+    color: $myBlue;
+    font-size: 15px;
+    
+}
+.marklogo{
+    display: flex;
+    margin-left: -20px;
+    text-decoration: none;
+
+}
+.logo img{
+    width: 64px;
+}
+.logo{
+    margin-right: 10px;
+}
+.logo-text{
+    margin-top: 10px;
+    color: $myBlue;
+	letter-spacing: 1px;
+	cursor: pointer;
+}
+
+.p-button-outlined{
+    text-decoration: none;
+    border: none;
+    color: $myBlue;
+    font-size: 20px;
+    font-family: 'Josefin Sans', sans-serif;
+    &:hover{
+    color: grey;
+    }
+}
+
+@media (max-width: 750px){
+    .marklogo{
+        display: none;
+    }
+    .p-button-outlined{
+        display: none;
+    }
+}

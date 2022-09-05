@@ -1,0 +1,50 @@
+<div class="card">
+    <p-table [value]="materieldeFacteur" [paginator]="true" [rows]="5" [responsive]="true" id="excel-table" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+                <tr>
+                    <th class="text-center text-gray-600 uppercase" style="font-size: smaller;" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                    <th></th>
+                </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-mt>
+                <tr>
+                    <td class="text-center text-gray-700">{{mt.numero}}</td>
+                    <td class="text-center text-gray-700">{{mt.qts}}</td>
+                    <td class="text-center text-gray-700">{{mt.designation}}</td>
+                    <td class="text-center text-gray-700">{{mt.prix}}</td>
+                    <td class="text-center text-gray-700">{{mt.montant}}</td>
+                    <td class="text-center text-gray-700" *ngIf="Facteur.valide == false">
+                        <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" (click)="onDelete(mt)"></button>
+                    </td>
+                </tr>
+        </ng-template>
+    </p-table>
+</div>
+<br><br>
+<div class="form-container" *ngIf="Facteur.valide == false">
+    <form ngModel #addForm="ngForm">
+        <div class="p-float-label p-input-icon-left">
+            <i class="pi pi-user"></i>
+            <input ngModel type="text" pInputText pKeyFilter="pnum" name="numero" > 
+            <label for="inputtext-left">Numero</label>
+        </div>
+        <div class="p-float-label p-input-icon-left">
+            <i class="pi pi-user"></i>
+            <input ngModel type="text" pInputText pKeyFilter="pnum" name="qts" > 
+            <label for="inputtext-left">Qts</label>
+        </div>
+        <div class="p-float-label p-input-icon-left">
+            <i class="pi pi-user"></i>
+            <input ngModel type="text" pInputText name="designation" > 
+            <label for="inputtext-left">Designation</label>
+        </div>
+        <div class="p-float-label p-input-icon-left">
+            <i class="pi pi-user"></i>
+            <input ngModel type="text" pInputText pKeyFilter="pnum" name="prix" > 
+            <label for="inputtext-left">Prix</label>
+        </div> 
+        <div class="p-float-label float-end" *ngIf="!Facteur.valide">
+            <pButton pButton icon="pi pi-plus" (click)="onAdd(addForm.value)" class="p-button-info"></pButton> 
+        </div>          
+    </form>
+</div>

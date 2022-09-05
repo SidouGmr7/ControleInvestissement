@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "kanaghazdemo-bc29d",
+    "staging": "kanaghazdemo-bc29d"
+  },
+  "targets": {}
+}

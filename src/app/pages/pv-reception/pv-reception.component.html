@@ -1,0 +1,116 @@
+<div class="head mb-2 mt-2">
+    <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Liste des Pv de Réception</a>
+    <div class="float-end">
+        <pButton pButton icon="pi pi-plus" (click)="add.show($event)" class="p-button-info mr-1" *ngIf="AuthService.ChekRole('Gestionnaire')"></pButton>
+        <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-1"></pButton>
+    </div>
+</div>
+<div class="card">
+    <p-table [value]="pv" responsiveLayout="scroll" id="excel-table" [paginator]="true" [rows]="6" [responsive]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+                <tr>
+                    <th  style="font-size: smaller;" class="text-gray-600 text-center uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                    <th  style="font-size: smaller;" class="text-gray-600 text-center uppercase">options</th>
+                </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rec>
+                <tr>
+                    <td class="text-center text-gray-700">{{rec.numero}}</td>
+                    <td class="text-center text-gray-700">{{rec.service}}</td>
+                    <td class="text-center text-gray-700">{{rec.fournisseur}}</td>
+                    <td class="text-center text-gray-700">{{rec.date}}</td>
+                    <td class="text-center text-gray-700">{{rec.gestionnaire}}</td>
+                    <td class="text-center text-gray-700">
+                        <button pButton icon="pi pi-align-center" class="p-button-rounded p-button-text" (click)="dialog.AddFormDialog('Materiel',rec)"></button>
+                        <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" (click)="onDelete(rec)"></button>
+                        <button pButton icon="pi pi-plus" class="p-button-rounded p-button-text" (click)="addmateriel.show($event , rec)"></button>
+
+                    </td>
+                </tr>
+                <p-overlayPanel #addmateriel [dismissable]="true" [showCloseIcon]="true">
+                    <ng-template pTemplate>
+                        <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Ajouer Des materiels sur cette PV</a>
+                        <form ngModel #addForm="ngForm">
+                            <div class="flex">
+                                <div class="p-float-label p-input-icon-left">
+                                    <i class="pi pi-user"></i>
+                                    <input ngModel type="number" pInputText name="quantite" pKeyFilter="pnum" style="width: 8rem;" > 
+                                    <label for="inputtext-left">Quantite</label>
+                                </div>
+                                <div class="p-float-label p-input-icon-left">
+                                    <i class="pi pi-user"></i>
+                                    <input ngModel type="text" pInputText name="numero" pKeyFilter="pnum" style="width: 8rem;"> 
+                                    <label for="inputtext-left">Grouop Inventaire</label>
+                                </div>
+                            </div>
+                            <div class="p-float-label p-input-icon-left">
+                                <i class="pi pi-user"></i>
+                                <input ngModel type="text" pInputText name="marque" > 
+                                <label for="inputtext-left">Marque</label>
+                            </div>
+                            <div class="p-float-label p-input-icon-left">
+                                <i class="pi pi-user"></i>
+                                <input ngModel type="text" pInputText name="designation" > 
+                                <label for="inputtext-left">Designation</label>
+                            </div>  
+                           <div class="flex">
+                                <div class="p-float-label p-input-icon-left mr-4">
+                                    <p-dropdown ngModel [options]="Categorie" optionValue="numero" optionLabel="numero" name="categorie" dropdownIcon="pi pi-user"></p-dropdown>
+                                    <label for="dropdown">Catégorie</label>
+                                </div>
+                                <div class="p-float-label p-input-icon-left">
+                                    <p-dropdown ngModel [options]="ChampsEtat" name="etat" dropdownIcon="pi pi-user" >
+                                        <ng-template let-item pTemplate="selectedItem"> 
+                                            {{item}} 
+                                        </ng-template> 
+                                    </p-dropdown>
+                                    <label for="dropdown">Etat</label>
+                                </div>    
+                           </div>
+                            <div class="p-float-label p-input-icon-left">
+                                <i class="pi pi-user"></i>
+                                <input ngModel type="number" pInputText name="prix" pKeyFilter="pnum"> 
+                                <label for="inputtext-left">Prix</label>
+                            </div>
+                            <div class="p-float-label">
+                                <p-button type="submit" (onClick)="onAddMateriel(addForm.value , rec)">Add</p-button>
+                            </div>
+                        </form>
+                    </ng-template>
+                </p-overlayPanel>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-overlayPanel #add [dismissable]="true" [showCloseIcon]="true">
+    <ng-template pTemplate>
+        <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Ajouer un PV de Réception</a>
+        <form ngModel #addForm="ngForm">
+            <div class="p-float-label p-input-icon-left">
+                <i class="pi pi-user"></i>
+                <input ngModel type="text" pInputText pKeyFilter="pnum" name="numero" > 
+                <label for="inputtext-left">Numero</label>
+            </div>
+            <div class="p-float-label">
+                <p-dropdown ngModel [options]="ChampsService" [autoDisplayFirst]="false" name="service">
+                    <ng-template let-item pTemplate="selectedItem"> 
+                        {{item}} 
+                    </ng-template> 
+                </p-dropdown>
+                <label for="dropdown">Service</label>
+            </div>
+            <div class="p-float-label p-input-icon-left">
+                <i class="pi pi-user"></i>
+                <input ngModel type="text" pInputText name="fournisseur" > 
+                <label for="inputtext-left">Fournisseur</label>
+            </div>
+            <div class="p-float-label p-input-icon-left">
+                <i class="pi pi-calendar"></i>
+                <input ngModel type="date" pInputText name="date" style="width: 14.7rem">
+            </div>
+            <div class="p-float-label">
+                <p-button mat-dialog-close type="submit" (onClick)="onAdd(addForm.value)">Add</p-button>
+            </div>
+        </form>     
+    </ng-template>
+</p-overlayPanel>

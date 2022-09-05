@@ -1,0 +1,11 @@
+<div class="form-container">
+    <form ngModel #addForm="ngForm" (ngSubmit)="onFactoration(numero_facteur.value)">
+    <a pButton class="p-button-outlined" style=" text-decoration: none;pointer-events: none;">Choisser une Facteurs</a>
+        <div class="p-float-label">
+            <p-dropdown [options]="facteur" optionValue="numero" optionLabel="numero" #numero_facteur></p-dropdown>
+        </div>
+        <div class="p-float-label">
+            <p-button mat-dialog-close type="submit">Add</p-button>
+        </div>
+    </form>
+</div>

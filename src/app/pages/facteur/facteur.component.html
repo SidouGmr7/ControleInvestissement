@@ -1,0 +1,66 @@
+<div class="head mb-2 mt-2">
+    <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Liste des factures</a>
+    <div class="float-end">
+        <pButton pButton icon="pi pi-plus" (click)="op.show($event)" class="p-button-info mr-1" *ngIf="AuthService.ChekRole('Comptable')"></pButton>
+        <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-1"></pButton>
+    </div>
+</div>
+<div class="card">
+    <p-table [value]="facteur" responsiveLayout="scroll" [paginator]="true" [rows]="6" [responsive]="true">
+        <ng-template pTemplate="header" >
+                <tr>
+                    <th style="font-size: smaller;" class="text-center text-gray-600 uppercase" [pSortableColumn]="champ" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                    <th style="font-size: smaller;" class="text-center text-gray-600 uppercase" *ngIf="AuthService.ChekRole('Comptable')">options</th>              
+                </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fac>
+                <tr >
+                    <td class="text-center text-gray-700">{{fac.numero}}</td>
+                    <td class="text-center text-gray-700">{{fac.fournisseur}}</td>
+                    <td class="text-center text-gray-700">{{fac.comptable}}</td>
+                    <td class="text-center text-gray-700">{{fac.date}}</td>
+                    <td class="text-center text-gray-700">{{fac.ht| currency: 'DZD '}}</td>
+                    <td class="text-center text-gray-700">{{fac.tva| currency: 'DZD '}}</td>
+                    <td class="text-center text-gray-700">{{fac.ttc| currency: 'DZD '}}</td>
+                    <td class="text-center" *ngIf="AuthService.ChekRole('Comptable')">
+                        <button pButton *ngIf="fac.valide" icon="pi pi-check" class="p-button-rounded p-button-text p-button-success" (click)="onValide(fac)"></button>
+                        <button pButton *ngIf="fac.valide" icon="pi pi-align-right" class="p-button-rounded p-button-text" (click)="dialog.ShowInfoFacteur(fac)"></button>
+                        <button pButton *ngIf="!fac.valide" icon="pi pi-check" class="p-button-rounded p-button-text p-button-help" (click)="OnDialogValide(fac)"></button>
+                        <button pButton *ngIf="!fac.valide" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" (click)="onDelete(fac)"></button>
+                        <button pButton *ngIf="!fac.valide" icon="pi pi-plus" class="p-button-rounded p-button-text" (click)="dialog.ShowInfoFacteur(fac)"></button>
+                    </td>
+                </tr>
+                
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+    <ng-template pTemplate>
+        <div class="form-container">
+            <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Ajouer Une Facteur</a>
+            <form ngModel #addForm="ngForm">
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="text" pInputText name="fournisseur" > 
+                    <label for="inputtext-left">Fournisseur</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="text" pInputText name="numero" > 
+                    <label for="inputtext-left">Numero</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-calendar"></i>
+                    <input ngModel type="date" pInputText name="date" style="width: 14.7rem">
+                </div>
+                <div class="p-float-label ml-6">
+                    <p-button mat-dialog-close type="submit" (onClick)="onAdd(addForm.value)" >Add</p-button>
+                </div>
+            </form>
+        </div>        
+    </ng-template>
+</p-overlayPanel>
+
+<p-confirmDialog  [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>

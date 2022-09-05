@@ -1,0 +1,34 @@
+<div class="sidenav" [ngClass]="screen.collapsed ? 'sidenav-collapsed': ''">
+    <div class="side-head">
+         <img *ngIf="authService.ChekRole('Admin')" alt="" src="https://www.bootdey.com/img/Content/avatar/avatar4.png">
+         <img *ngIf="authService.ChekRole('Comptable')" alt="" src="https://www.bootdey.com/img/Content/avatar/avatar1.png">
+         <img *ngIf="authService.ChekRole('Gestionnaire')" alt="" src="https://www.bootdey.com/img/Content/avatar/avatar6.png">
+    </div>
+    <ul class="side-body">
+        <li>
+            <a class="item-link" (click)="togglecollapse()">
+                <i class='item-icon bx bxl-xing bx-tada bx-rotate-270' ></i>
+            </a> 
+        </li>
+        <li class="item" *ngFor="let data of navData " >
+            <div *ngIf="authService.ChekRole('Admin')">
+                <a  class="item-link" [routerLink]="[data.routeLink]" routerLinkActive="active" (dblclick)="togglecollapse()">
+                    <i class="item-icon" [class] = 'data.icon'></i>
+                    <span class="item-text" @fadeInOut *ngIf="screen.collapsed">{{data.label}}</span>
+                </a>    
+            </div>    
+            <div *ngIf="authService.ChekRole('Comptable') &&  data.Comptable">
+                <a class="item-link" [routerLink]="[data.routeLink]" routerLinkActive="active" (dblclick)="togglecollapse()">
+                    <i class="item-icon" [class] = 'data.icon'></i>
+                    <span class="item-text" @fadeInOut *ngIf="screen.collapsed">{{data.label}}</span>
+                </a>    
+            </div>    
+            <div *ngIf="authService.ChekRole('Gestionnaire') && data.Gestionnaire">
+                <a class="item-link" [routerLink]="[data.routeLink]" routerLinkActive="active" (dblclick)="togglecollapse()">
+                    <i class="item-icon" [class] = 'data.icon'></i>
+                    <span class="item-text" @fadeInOut *ngIf="screen.collapsed">{{data.label}}</span>
+                </a>    
+            </div>        
+        </li>
+    </ul>
+</div>

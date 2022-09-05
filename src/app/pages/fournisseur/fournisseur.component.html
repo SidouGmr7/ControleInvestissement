@@ -1,0 +1,119 @@
+
+<div class="b-3 mt-3">
+    <p-tabView>
+        <p-tabPanel header="Liste des fournisseur" leftIcon="pi pi-calendar">
+            <div class="head mb-2 mt-2">
+                <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Liste des Fournisseurs</a>
+                <div class="float-end">
+                    <pButton pButton icon="pi pi-plus" (click)="op.show($event)" class="p-button-info mr-1" *ngIf="AuthService.ChekRole('Comptable')"></pButton>
+                    <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-2 space"></pButton>
+                </div>
+            </div>
+            <div class="card">
+                <p-table [value]="Fournisseur" responsiveLayout="scroll" id="excel-table" [paginator]="true" [rows]="5" [responsive]="true" styleClass="p-datatable-striped">
+                    <ng-template pTemplate="header">
+                            <tr>
+                                <th style="font-size: smaller;" class="text-center text-gray-600 uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champsfournisseur">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                            </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-frn>
+                            <tr>
+                                <td class="text-center text-gray-700">{{frn.numero}}</td>
+                                <td class="text-center text-gray-700">{{frn.tlp}}</td>
+                                <td class="text-center text-gray-700">{{frn.dette| currency: 'DZD '}}</td>
+                                <td class="text-center text-gray-700">{{frn.RetardPaiement}}</td>
+                                <td class="text-center text-gray-700">
+                                    <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" (click)="onDelete(frn)"></button>
+                                    <button pButton icon="pi pi-align-right" class="p-button-rounded p-button-text" (click)="onShowFacteurdeFournisseur(frn)"></button>
+                                </td>
+                            </tr>
+                    </ng-template>
+                </p-table>
+            </div>               
+        </p-tabPanel>
+        <p-tabPanel header="La Priorité de paiement de fournisseur" leftIcon="pi pi-inbox">
+            <div class="card">
+                <p-table [value]="Fournisseur" responsiveLayout="scroll" id="excel-table" [paginator]="true" [rows]="5" [responsive]="true" styleClass="p-datatable-striped">
+                    <ng-template pTemplate="header">
+                            <tr>
+                                <th style="font-size: smaller;" class="text-center text-gray-600 uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champspaiementfournisseur">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                            </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-frn>
+                            <tr *ngIf="frn.payer == false ">
+                                <td class="text-center text-gray-700 counterCell"></td>
+                                <td class="text-center text-gray-700">{{frn.numero}}</td>
+                                <td class="text-center text-gray-700">{{frn.dette| currency: 'DZD '}}</td>
+                                <td class="text-center text-gray-700">{{frn.situation}}</td>
+                                <td class="text-center text-gray-700">{{frn.RetardPaiement}}</td>
+                                <td class="text-center text-gray-700">{{frn.anciennete}}</td>
+                                <td class="text-center text-gray-700">
+                                    <button pButton icon="pi pi-dollar" class="p-button-rounded p-button-text" (click)="payer.show($event,frn)"></button>
+                                    <button pButton icon="pi pi-info" class="p-button-rounded p-button-text" (click)="Post(frn)"></button>
+                                </td>
+                            </tr>
+                            <p-overlayPanel #payer [dismissable]="true" [showCloseIcon]="true">
+                                <ng-template pTemplate>
+                                    <div class="form-container">
+                                        <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Ajouer Une Facteur</a>
+                                        <form ngModel #addForm="ngForm">
+                                            <div class="p-float-label p-input-icon-left">
+                                                <i class="pi pi-user"></i>
+                                                <input  type="text" pInputText pKeyFilter="num" #mantant > 
+                                                <label for="inputtext-left">Designation</label>
+                                            </div>
+                                            <div class="p-float-label ml-6">
+                                                <p-button mat-dialog-close type="submit" (onClick)="paiement(frn,mantant.value)">Add</p-button>
+                                            </div>
+                                        </form>
+                                    </div>        
+                                </ng-template>
+                            </p-overlayPanel>
+                    </ng-template>
+                </p-table>
+            </div>        
+        </p-tabPanel>
+    </p-tabView>
+</div>
+<p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+    <ng-template pTemplate>
+        <div class="form-container">
+            <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Ajouer Une Fournisseur</a>
+            <form ngModel #addForm="ngForm">
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="text" pInputText name="numero" > 
+                    <label for="inputtext-left">Designation</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="text" pKeyFilter="num" pInputText name="tlp" > 
+                    <label for="inputtext-left">Tlp</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="number" pInputText pKeyFilter="num" name="dette" pKeyFilter="pnum"> 
+                    <label for="inputtext-left">Dette</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="number" pInputText pKeyFilter="num" name="situation" pKeyFilter="pnum"> 
+                    <label for="inputtext-left">Situation</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="number" pInputText pKeyFilter="num" name="RetardPaiement" pKeyFilter="pnum"> 
+                    <label for="inputtext-left">RetardPaiement</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="number" pInputText pKeyFilter="num" name="anciennete" pKeyFilter="pnum"> 
+                    <label for="inputtext-left">Anciennete</label>
+                </div>
+                <div class="p-float-label ml-6">
+                    <p-button mat-dialog-close type="submit" (onClick)="onAdd(addForm.value)" >Add</p-button>
+                </div>
+            </form>
+        </div>        
+    </ng-template>
+</p-overlayPanel>

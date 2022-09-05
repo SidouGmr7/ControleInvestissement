@@ -1,0 +1,11 @@
+.p-float-label{
+    margin-left: 5px;
+}
+.form-container{
+    display: flex;
+    
+}
+input{
+    max-width: 150px;
+
+}

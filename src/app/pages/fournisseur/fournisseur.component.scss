@@ -1,0 +1,19 @@
+.form-container{
+        max-width: auto;
+    }
+.p-float-label{
+      margin-top: 25px;
+      margin-left: 5px;
+      display: block;
+    }
+.p-button-outlined{
+      text-decoration: none; pointer-events: none;
+    }
+
+#excel-table{
+  counter-reset: tableCount;     
+}
+.counterCell:before {              
+    content: counter(tableCount); 
+    counter-increment: tableCount; 
+}

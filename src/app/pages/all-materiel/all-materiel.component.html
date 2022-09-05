@@ -1,0 +1,130 @@
+<div class="head mb-2 mt-2">
+    <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none">Liste des materiels</a>
+    <div class="float-end">
+        <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-1"></pButton>
+    </div>
+</div>
+<div class="card">
+    <p-table [value]="materiel" dataKey="numero" id="excel-table" editMode="row" [paginator]="true" [rows]="9" [responsive]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="font-size: smaller;" class="text-gray-600 text-center uppercase" [pSortableColumn]="champ.toLowerCase()" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                <th></th>
+                <th style="font-size: smaller;" class="text-gray-600 uppercase"  *ngIf="AuthService.ChekRole('Gestionnaire')">option</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-mat let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="mat">
+                <td class="text-center text-gray-700">
+                    {{mat.numero}} 
+                </td> 
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="mat.designation" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.designation}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="mat.marque" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.marque}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="mat.categorie" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.categorie}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="mat.serie" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.serie}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="mat.date" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.date}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="mat.etat" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.etat}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="mat.facteur" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.facteur}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="mat.PV" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.PV}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>         
+                <td class="text-center text-gray-700">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="number" [(ngModel)]="mat.prix" >
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{mat.prix| currency: 'DZD '}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center text-gray-700">
+                    <i class="pi" [ngClass]="{'true-icon pi-check-circle' : mat.valide == 'valide',
+                                              'false-icon pi-times-circle': mat.valide == 'refuse',
+                                               'info-icon pi-info-circle' : mat.valide == 'attente',
+                                               'pi-exclamation-triangle' : mat.valide == 'reforme'}"></i>
+                </td>
+                <td *ngIf="AuthService.ChekRole('Gestionnaire') && mat.valide != 'valide' " class="flex">
+                    <button pButton icon="pi pi-trash" (click)="onDelete(mat)"  class="p-button-rounded p-button-text p-button-danger"></button>
+                    <button *ngIf="!editing" pButton pRipple pInitEditableRow icon="pi pi-pencil"  class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="editing" pButton pRipple pSaveEditableRow icon="pi pi-check" (click)="onUpdate(mat)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple pCancelEditableRow icon="pi pi-times"  class="p-button-rounded p-button-text p-button-danger"></button>
+                </td>
+                <td *ngIf="AuthService.ChekRole('Gestionnaire') && mat.valide == 'valide'">
+    <a pButton class="p-button-outlined p-button-success" style="text-decoration: none; pointer-events: none">Valider</a>
+                    
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

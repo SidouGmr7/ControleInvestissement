@@ -1,0 +1,55 @@
+<div class="head mt-2 mb-2">
+    <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Liste des Categories</a>
+    <div class="float-end">
+        <pButton pButton icon="pi pi-plus" (click)="op.show($event)" class="p-button-info mr-2 space" *ngIf="AuthService.ChekRole('Gestionnaire')"></pButton>
+        <pButton pButton icon="pi pi-file-excel" (click)="fnc.exportExcel()" class="p-button-success mr-2 space"></pButton>
+    </div>
+</div>
+<div class="card">
+    <p-table [value]="Categorie" responsiveLayout="scroll" id="excel-table" [paginator]="true" [rows]="9" [responsive]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+                <tr>
+                    <th style="font-size: smaller;" class="text-gray-600 text-center uppercase" [pSortableColumn]="champ" *ngFor="let champ of champs">{{champ}}<p-sortIcon [field]="champ"></p-sortIcon></th>
+                    <th style="font-size: smaller;" class="text-gray-600 text-center uppercase" *ngIf="AuthService.ChekRole('Gestionnaire')">option</th>
+                </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cat>
+                <tr>
+                    <td class="text-center text-gray-700">{{cat.numero}}</td>
+                    <td class="text-center text-gray-700">{{cat.designation}}</td>
+                    <td class="text-center text-gray-700">{{cat.taux_amortissments}}</td>
+                    <td class="text-center text-gray-700" *ngIf="AuthService.ChekRole('Gestionnaire')">
+                        <button pButton icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" (click)="onDelete(cat)"></button>                    </td>
+                </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+    <ng-template pTemplate>
+        <div class="form-container">
+            <a pButton class="p-button-outlined" style="text-decoration: none; pointer-events: none;">Ajouer Une Categorie</a>
+            <form ngModel #addForm="ngForm">
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="text" pInputText name="numero" > 
+                    <label for="inputtext-left">Numero</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="text" pInputText name="designation" > 
+                    <label for="inputtext-left">designation</label>
+                </div>
+                <div class="p-float-label p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input ngModel type="number" pInputText pKeyFilter="pnum" name="taux_amortissments" > 
+                    <label for="inputtext-left">Taux Amortissments</label>
+                </div>
+                <div class="p-float-label">
+                    <p-button mat-dialog-close type="submit" (onClick)="onAdd(addForm.value)">Add</p-button>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+</p-overlayPanel>
+

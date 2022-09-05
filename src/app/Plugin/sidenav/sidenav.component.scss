@@ -1,0 +1,63 @@
+@import "../../../assets/scss/colors.scss";
+
+.sidenav{
+    transition: all .5s ease-in-out;
+    position: fixed;
+    width: 4rem;
+    z-index: 1;
+    top: 0;
+}
+.side-head{
+    background-color: rgba(25, 118, 210, 0); 
+}
+.side-head img{
+    width: 64px;
+    height: 58px;
+}
+.side-body{
+    list-style: none;
+    padding: 0px 0px 500px 2px;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: $myGrey;
+}
+
+.sidenav-collapsed{width: 11rem;}
+.item{
+    width: 100%;
+}
+.item-link{
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    color: whitesmoke;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding-left: 7px;
+    &:hover{
+        color: $myBlue;
+    }
+}
+.item-icon{
+    font-size: 15px;
+    margin: 0 0.8rem;
+
+}
+
+.active{
+    color: $myBlue;
+    border-left: solid;
+}
+
+@media (max-width: 750px) {
+    .sidenav-collapsed{
+       width: 4rem;
+    }
+    .item-text{
+        display: none;
+    }
+    .sidenav{
+        display: none;
+    }
+}

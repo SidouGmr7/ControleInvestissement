@@ -1,0 +1,85 @@
+<div class="grid mb-2 mt-2">
+    <div class="col-12 md:col-6 lg:col-3">
+        <div class="surface-card shadow-4 p-3 border-round">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3 ">Materiel</span>
+                    <div class="flex fs-4">
+                        <p-badge value="{{Materiel.length}}" size="large" severity="warning" styleClass="mr-2"></p-badge>
+                        <p-badge value="{{MaterielAccipte.length}}" size="large" severity="success" styleClass="mr-2"></p-badge>
+                        <p-badge value="{{MaterielAttente.length}}" size="large" severity="info" styleClass="mr-2"></p-badge>
+                        <p-badge value="{{MaterielRefuse.length}}" size="large" severity="danger" styleClass="mr-2"></p-badge>
+                        <p-badge value="{{MaterielReformer.length}}" size="large" severity="danger" styleClass="mr-2"></p-badge>
+                    </div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width:2.5rem;height:2.5rem">
+                    <i class="pi pi-desktop text-blue-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">12 nouveau</span>
+            <span class="text-500"> Matériels</span>
+        </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-3">
+        <div class="surface-card shadow-4 p-3 border-round">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3 ">Facture</span>
+                    <div class="flex fs-4">
+                        <p-badge value="{{Facteur.length}}" size="large" severity="warning" styleClass="mr-2"></p-badge>
+                        <p-badge value="{{Facteurvalider.length}}" size="large" severity="success" styleClass="mr-2"></p-badge>
+                        <p-badge value="{{FacteurAttente.length}}" size="large" severity="info" styleClass="mr-2"></p-badge>
+                    </div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width:2.5rem;height:2.5rem">
+                    <i class="pi pi-file text-orange-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">4 nouveau</span>
+            <span class="text-500"> Factures</span>
+        </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-3">
+        <div class="surface-card shadow-4 p-3 border-round">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3 ">Mantant Globale</span>
+                    <p-badge value="{{CalculMatnatTotale(Facteurvalider) | currency: 'DZD '}}" size="large" severity="success" styleClass="mr-2"></p-badge>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" style="width:2.5rem;height:2.5rem">
+                    <i class="pi pi-dollar text-cyan-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">%52+ DZD</span>
+        </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-3">
+        <div class="surface-card shadow-4 p-3 border-round">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3 ">Fournisseur</span>
+                    <div class="flex fs-4">
+                        <p-badge value="{{Fournisseur.length}}" size="large" severity="warning" styleClass="mr-2"></p-badge>
+                        <p-badge value="{{FournisseurAvecDattes.length}}" size="large" severity="success" styleClass="mr-2"></p-badge>
+                        <p-badge value="{{FournisseurSansDattes.length}}" size="large" severity="info" styleClass="mr-2"></p-badge>
+                    </div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width:2.5rem;height:2.5rem">
+                    <i class="pi pi-file text-orange-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">2 nouveau</span>
+            <span class="text-500"> Fournisseur</span>
+        </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-4">
+        <div class="surface-card shadow-4 p-2 border-round">
+            <p-chart type="doughnut" [data]="data"  [style]="{'height': '40%'}"></p-chart>
+        </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-8">
+        <div class="surface-card shadow-4 p-1 border-round">
+            <p-chart type="line" [data]="data2" ></p-chart>
+        </div>
+    </div>
+

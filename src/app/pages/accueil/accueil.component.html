@@ -1,0 +1,10 @@
+<div class="layout">
+    <p-carousel [value]="image" [numVisible]="numVisible" [numScroll]="1" [circular]="true" [autoplayInterval]="3000">
+        <ng-template let-img pTemplate="item">
+                <div [routerLink]="img.router" class="text-center content">
+                        <img class="shadow" [src]="img.url" alt="">
+                        <h1  class="text-block">{{img.name}}</h1>
+                </div>
+        </ng-template>
+    </p-carousel>    
+</div>
